@@ -3,6 +3,10 @@ import 'firebase/firestore';
 
 export default class DatabaseHelper {
 
+  /**
+   * Create the database helper instance that only talks really to firebase
+   * @constructor
+   */
   constructor() {
     firebase.initializeApp({
       apiKey: "AIzaSyDzKnDx9w4K0yHcTC8q4lEdBUgRNNLjIyw",
@@ -34,6 +38,10 @@ export default class DatabaseHelper {
     });
   }
 
+  /**
+   * Get the data back from firebase
+   * @return {Promise<firebase.firestore.DocumentData[]>}
+   */
   async getData () {
     const snapshot = await this._db.collection('people').get();
     return snapshot.docs.map((doc) => {
