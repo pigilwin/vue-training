@@ -63,27 +63,29 @@ export default {
         person () {
             const database = new DatabaseHelper();
             const that = this;
-            const isValidated = this.lastName > 0 && this.firstName > 0 && this.age > 0 && this.selectedCountry > 0;
+            const isValidated = this.lastName.length > 0 && this.firstName.length > 0 && this.age > 0 && this.selectedCountry > 0;
 
-            if (isValidated) {
-                if (id === 0) {
-                    database.addPerson(this.firstName, this.lastName, this.age, this.selectedCountry).then(() => {
-                        that.$snack.success({
-                            text: 'Created person'
-                        });
-                    });
-                } else {
-                    database.updatePerson(this.id, this.firstName, this.lastName, this.age, this.selectedCountry).then(() => {
-                        that.$snack.success({
-                            text: 'Updated person'
-                        });
-                    });
-                }
-            } else {
+            if (!isValidated) {
                 that.$snack.danger({
-                    text: 'Form is in a invalid state'
+                    text: 'Form is in a invalid state',
+                    button: 'Ok'
+                });
+                return;
+            }
+            if (this.id === 0) {
+                database.addPerson(this.firstName, this.lastName, this.age, this.selectedCountry).then(() => {
+                    that.$snack.success({
+                        text: 'Created person'
+                    });
+                });
+            } else {
+                database.updatePerson(this.id, this.firstName, this.lastName, this.age, this.selectedCountry).then(() => {
+                    that.$snack.success({
+                        text: 'Updated person'
+                    });
                 });
             }
+            this.$router.push('/list');
         }
     },
     components: {
