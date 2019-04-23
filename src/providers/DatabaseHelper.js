@@ -8,14 +8,16 @@ export default class DatabaseHelper {
    * @constructor
    */
   constructor() {
-    firebase.initializeApp({
-      apiKey: "AIzaSyDzKnDx9w4K0yHcTC8q4lEdBUgRNNLjIyw",
-      authDomain: "pigilwin-vue-training.firebaseapp.com",
-      databaseURL: "https://pigilwin-vue-training.firebaseio.com",
-      projectId: "pigilwin-vue-training",
-      storageBucket: "pigilwin-vue-training.appspot.com",
-      messagingSenderId: "929379097749"
-    });
+    if (firebase.apps.length === 0) {
+      firebase.initializeApp({
+        apiKey: "AIzaSyDzKnDx9w4K0yHcTC8q4lEdBUgRNNLjIyw",
+        authDomain: "pigilwin-vue-training.firebaseapp.com",
+        databaseURL: "https://pigilwin-vue-training.firebaseio.com",
+        projectId: "pigilwin-vue-training",
+        storageBucket: "pigilwin-vue-training.appspot.com",
+        messagingSenderId: "929379097749"
+      });
+    }
     this._db = firebase.firestore();
   }
 
