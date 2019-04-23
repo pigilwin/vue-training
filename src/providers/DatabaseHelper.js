@@ -25,16 +25,34 @@ export default class DatabaseHelper {
    * @param {string} firstname
    * @param {string} lastname
    * @param {int} age
-   * @param {string} location
+   * @param {int} location
    * @return {Promise<firebase.firestore.DocumentReference>}
    */
-  addPerson(firstname, lastname, age, location) {
+  addPerson (firstname, lastname, age, location) {
     const id = (new Date()).getTime().toString();
     return this._db.collection('people').doc(id).set({
-      firstname: firstname,
-      lastname: lastname,
-      age: age,
-      location: location
+      firstname,
+      lastname,
+      age,
+      location
+    });
+  }
+
+  /**
+   * Update the person on the db
+   * @param {int} id
+   * @param {string} firstname
+   * @param {string} lastname
+   * @param {int} age
+   * @param {int} location
+   * @return {Promise<void>}
+   */
+  updatePerson (id, firstname, lastname, age, location) {
+    return this._db.collection('people').doc(id).set({
+      firstname,
+      lastname,
+      age,
+      location
     });
   }
 
