@@ -8,14 +8,17 @@ export default class DatabaseHelper {
    * @constructor
    */
   constructor() {
-    firebase.initializeApp({
-      apiKey: "AIzaSyDzKnDx9w4K0yHcTC8q4lEdBUgRNNLjIyw",
-      authDomain: "pigilwin-vue-training.firebaseapp.com",
-      databaseURL: "https://pigilwin-vue-training.firebaseio.com",
-      projectId: "pigilwin-vue-training",
-      storageBucket: "pigilwin-vue-training.appspot.com",
-      messagingSenderId: "929379097749"
-    });
+    if (firebase.apps.length === 0) {
+      firebase.initializeApp({
+        apiKey: "AIzaSyDzKnDx9w4K0yHcTC8q4lEdBUgRNNLjIyw",
+        authDomain: "pigilwin-vue-training.firebaseapp.com",
+        databaseURL: "https://pigilwin-vue-training.firebaseio.com",
+        projectId: "pigilwin-vue-training",
+        storageBucket: "pigilwin-vue-training.appspot.com",
+        messagingSenderId: "929379097749"
+      });
+    }
+
     this._db = firebase.firestore();
   }
 
@@ -29,7 +32,7 @@ export default class DatabaseHelper {
    * @return {Promise<firebase.firestore.DocumentReference>}
    */
   addPerson (firstname, lastname, age, location) {
-    const id = (new Date()).getTime().toString();
+    const id = this._db.collection('people').doc().id;
     return this._db.collection('people').doc(id).set({
       firstname,
       lastname,
@@ -40,7 +43,7 @@ export default class DatabaseHelper {
 
   /**
    * Update the person on the db
-   * @param {int} id
+   * @param {string} id
    * @param {string} firstname
    * @param {string} lastname
    * @param {int} age
