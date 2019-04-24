@@ -21,13 +21,15 @@ export default new Router({
             component: Create
         },
         {
-            path: '/list',
+            path: '/people',
             name: 'list',
-            component: List
-        },
-        {
-            path: '/edit/:id',
-            name: 'edit'
+            component: List,
+            children: [
+                {
+                    path: ':id',
+                    name: 'edit'
+                }
+            ]
         }
     ],
 });
