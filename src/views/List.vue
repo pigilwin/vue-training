@@ -1,10 +1,10 @@
 <template>
-    <div class="row">
-        <div class="col-xs-12 col-md-12">
-            <router-view></router-view>
-        </div>
-        <div class="col-xs-12 col-md-6" :key="person.id" v-for="person in people">
-            <person :person="person" :countries="countries"></person>
+    <div>
+        <router-view></router-view>
+        <div class="row">
+            <div class="col-xs-12 col-md-6" :key="person.id" v-for="person in people">
+                <person :person="person" :countries="countries"></person>
+            </div>
         </div>
     </div>
 </template>
