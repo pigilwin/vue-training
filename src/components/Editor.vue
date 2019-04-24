@@ -85,7 +85,7 @@ export default {
                     });
                 });
             }
-            this.$router.push('/list');
+            this.$router.push('/people');
         }
     },
     components: {
