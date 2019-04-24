@@ -59,6 +59,15 @@ export default class DatabaseHelper {
   }
 
   /**
+   * Get one document
+   * @param id
+   * @return {Promise<firebase.firestore.DocumentSnapshot>}
+   */
+  getOne (id) {
+    return this._db.collection('people').doc(id).get();
+  }
+
+  /**
    * Get the data back from firebase
    * @return {Promise<firebase.firestore.DocumentData[]>}
    */
