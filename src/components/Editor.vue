@@ -45,12 +45,14 @@ export default {
     props: {
         person: {
             type: Object,
-            default: {
+            default: function() {
+              return {
                 id: '',
                 firstname: '',
                 lastname: '',
                 age: '',
                 country: ''
+              }
             }
         },
         edit: {
@@ -82,30 +84,21 @@ export default {
     methods: {
         savePerson () {
             const database = new DatabaseHelper();
-            const that = this;
             const isValidated = this.lastName.length > 0 && this.firstName.length > 0 && this.age > 0 && this.selectedCountry > 0;
 
             if (!isValidated) {
-                that.$snack.danger({
-                    text: 'Form is in a invalid state',
-                    button: 'Ok'
-                });
+                this.$emit('invalidForm');
                 return;
             }
             if (this.id.length === 0) {
                 database.addPerson(this.firstName, this.lastName, this.age, this.selectedCountry).then(() => {
-                    that.$snack.success({
-                        text: 'Created person'
-                    });
+                  this.$emit('newPersonCreated');
                 });
             } else {
                 database.updatePerson(this.id, this.firstName, this.lastName, this.age, this.selectedCountry).then(() => {
-                    that.$snack.success({
-                        text: 'Updated person'
-                    });
+                  this.$emit('personUpdated');
                 });
             }
-            this.$router.push('/people');
         },
         decideButtonLabel () {
             if (this.id.length === 0) {
