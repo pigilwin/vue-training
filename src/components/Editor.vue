@@ -24,8 +24,11 @@
                     </select>
                     <feed-back-message :valid="selectedCountry > 0" error="Invalid country" success="Valid Country"></feed-back-message>
                 </div>
-                <div class="col-xs-12 col-md-12 p-3">
-                    <button class="btn btn-block btn-lg btn-primary" @click="person()">Create Person</button>
+                <div class="col-xs-12 col-md-12 p-3" v-if="edit">
+                    <button class="btn btn-block btn-lg btn-primary" @click="savePerson()">{{decideButtonLabel()}}</button>
+                </div>
+                <div class="col-xs-12 col-md-12 p-3" v-if="!edit">
+                    <router-link class="btn btn-block btn-lg btn-primary" :to="{name: 'edit', params: {id: id}}">Edit</router-link>
                 </div>
             </div>
         </div>
@@ -39,14 +42,30 @@ import FeedBackMessage from "@/components/FeedBackMessage";
 
 export default {
     name: "Editor",
+    props: {
+        person: {
+            type: Object,
+            default: {
+                id: '',
+                firstname: '',
+                lastname: '',
+                age: '',
+                country: ''
+            }
+        },
+        edit: {
+            type: Boolean,
+            default: false
+        }
+    },
     data () {
         return {
             countries: [],
             selectedCountry: 0,
             firstName: '',
             lastName: '',
-            age: 0,
-            id: 0
+            currentAge: 0,
+            id: ''
         }
     },
     created () {
@@ -58,9 +77,10 @@ export default {
             }];
             that.countries = that.countries.concat(data);
         });
+        this.mapPerson(this.person);
     },
     methods: {
-        person () {
+        savePerson () {
             const database = new DatabaseHelper();
             const that = this;
             const isValidated = this.lastName.length > 0 && this.firstName.length > 0 && this.age > 0 && this.selectedCountry > 0;
@@ -72,7 +92,7 @@ export default {
                 });
                 return;
             }
-            if (this.id === 0) {
+            if (this.id.length === 0) {
                 database.addPerson(this.firstName, this.lastName, this.age, this.selectedCountry).then(() => {
                     that.$snack.success({
                         text: 'Created person'
@@ -85,7 +105,28 @@ export default {
                     });
                 });
             }
-            this.$router.push('/list');
+            this.$router.push('/people');
+        },
+        decideButtonLabel () {
+            if (this.id.length === 0) {
+                return 'Create Person';
+            }
+            return 'Update Person';
+        },
+        mapPerson (person) {
+            this.id = person.id;
+            this.firstName = person.firstname;
+            this.lastName = person.lastname;
+            this.age = person.age;
+            this.selectedCountry = person.location;
+        }
+    },
+    watch: {
+        person: {
+            immediate: true,
+            handler (newVal) {
+                this.mapPerson(newVal);
+            }
         }
     },
     components: {

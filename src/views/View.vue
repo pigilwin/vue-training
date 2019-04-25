@@ -1,7 +1,7 @@
 <template>
     <div class="row mb-4">
         <div class="col-xs-12 col-md-12">
-            <editor edit="true" :person="person"></editor>
+            <editor :person="person"></editor>
         </div>
     </div>
 </template>

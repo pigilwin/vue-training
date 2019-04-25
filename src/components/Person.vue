@@ -8,7 +8,7 @@
             <p>Location: {{activeCountries[current.location]}}</p>
         </div>
         <div class="card-footer">
-            <router-link :to="{name: 'edit', params: {id: current.id}}" class="btn btn-primary btn-block">Go</router-link>
+            <router-link :to="{name: 'view', params: {id: current.id}}" class="btn btn-primary btn-block">Go</router-link>
         </div>
     </div>
 </template>
