@@ -14,8 +14,8 @@
                 </div>
                 <div class="col-md-12 col-xs-12">
                     <label for="age">Age</label>
-                    <input type="number" id="age" v-model="age" class="form-control"/>
-                    <feed-back-message :valid="age > 0" success="Valid age" error="Invalid age"></feed-back-message>
+                    <input type="number" id="age" v-model="ageStored" class="form-control"/>
+                    <feed-back-message :valid="ageStored > 0" success="Valid age" error="Invalid age"></feed-back-message>
                 </div>
                 <div class="col-xs-12 col-md-12">
                     <label for="country">Country</label>
