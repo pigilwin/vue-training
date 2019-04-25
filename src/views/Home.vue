@@ -20,30 +20,31 @@
           }
         });
 
-
-        const canvas = document.querySelector('#chart');
-        const chart = new Chart(canvas, {
-          type: 'bar',
-          title: {
-            display: true,
-            text: 'Chart showing age by location'
-          },
-          data: {
-            labels: this.filterLabels(labels),
-            datasets: this.createDataSets(datasets)
-          },
-          options: {
-            responsive: true,
-            scales: {
-              yAxes: [{
-                ticks: {
-                  beginAtZero: true,
-                  padding: 25,
-                }
-              }]
+        if (labels.length > 0 && datasets.length > 0) {
+          const canvas = document.querySelector('#chart');
+          const chart = new Chart(canvas, {
+            type: 'bar',
+            title: {
+              display: true,
+              text: 'Chart showing age by location'
+            },
+            data: {
+              labels: this.filterLabels(labels),
+              datasets: this.createDataSets(datasets)
+            },
+            options: {
+              responsive: true,
+              scales: {
+                yAxes: [{
+                  ticks: {
+                    beginAtZero: true,
+                    padding: 25,
+                  }
+                }]
+              }
             }
-          }
-        });
+          });
+        }
       });
     },
     methods: {
