@@ -15,7 +15,6 @@
                 <div class="col-md-12 col-xs-12">
                     <label for="age">Age</label>
                     <input type="number" id="age" v-model="age" class="form-control"/>
-                    <feed-back-message :valid="age > 0" success="Valid age" error="Invalid age"></feed-back-message>
                 </div>
                 <div class="col-xs-12 col-md-12">
                     <label for="country">Country</label>
@@ -84,7 +83,8 @@ export default {
     methods: {
         savePerson () {
             const database = new DatabaseHelper();
-            const isValidated = this.lastName.length > 0 && this.firstName.length > 0 && this.age > 0 && this.selectedCountry > 0;
+
+            const isValidated = this.lastName.length > 0 && this.firstName.length > 0 && this.selectedCountry > 0;
 
             if (!isValidated) {
                 this.$emit('invalidForm');
@@ -123,7 +123,8 @@ export default {
         }
     },
     components: {
-        FeedBackMessage
+        FeedBackMessage,
+        'age-message': FeedBackMessage
     }
 }
 </script>
