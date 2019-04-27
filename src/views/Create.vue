@@ -36,14 +36,14 @@ export default {
           text: 'New person created',
           button: 'Ok'
         });
-        this.$router.push('list');
+        this.$router.push('people');
       },
       personUpdated () {
         this.$snack.success({
           text: 'Person updated',
           button: 'Ok'
         });
-        this.$router.push('list');
+        this.$router.push('people');
       }
     },
     components: {
