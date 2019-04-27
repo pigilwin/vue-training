@@ -30,18 +30,6 @@
                 this.person.id = id;
             });
         },
-        watch: {
-            '$route.params.id': {
-                immediate: true,
-                handler (id) {
-                    const db = new DatabaseHelper();
-                    db.getOne(id).then((row)=> {
-                        this.person = row.data();
-                        this.person.id = id;
-                    });
-                }
-            }
-        },
         components: {
             Editor
         }
