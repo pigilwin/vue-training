@@ -36,9 +36,9 @@
 </template>
 
 <script>
-import Countries from '@/providers/Countries';
 import DatabaseHelper from "@/providers/DatabaseHelper";
 import FeedBackMessage from "@/components/FeedBackMessage";
+import {FETCH_COUNTRIES_FROM_API} from "@/stores/Countries/CountriesActions";
 
 export default {
     name: "Editor",
@@ -71,13 +71,8 @@ export default {
         }
     },
     created () {
-        const that = this;
-        Countries.getAll().then((data) => {
-            that.countries = [{
-                code: 0,
-                name: 'Unknown'
-            }];
-            that.countries = that.countries.concat(data);
+        this.$store.dispatch(FETCH_COUNTRIES_FROM_API).then(() => {
+            this.countries = this.$store.getters.getCountries;
         });
         this.mapPerson(this.person);
     },

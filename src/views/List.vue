@@ -11,8 +11,8 @@
 
 <script>
     import Person from '@/components/Person';
-    import DatabaseHelper from '@/providers/DatabaseHelper';
-    import Countries from '@/providers/Countries';
+    import {FETCH_PEOPLE_FROM_DATABASE} from "@/stores/Person/PersonActions";
+    import {FETCH_COUNTRIES_FROM_API} from "@/stores/Countries/CountriesActions";
 
     export default {
         name: 'List',
@@ -23,20 +23,12 @@
             }
         },
         created () {
-            this.loadData();
-        },
-        methods: {
-            loadData () {
-                let db = new DatabaseHelper();
-                db.getData().then((data) => {
-                    this.people = data;
-                });
-                Countries.getAll().then((row) => {
-                    row.forEach((country) => {
-                        this.countries[country.code] = country.name;
-                    });
-                });
-            }
+            this.$store.dispatch(FETCH_PEOPLE_FROM_DATABASE).then(() => {
+                this.people = this.$store.getters.getPeople;
+            });
+            this.$store.dispatch(FETCH_COUNTRIES_FROM_API).then(() => {
+                this.countries = this.$store.getters.getCountriesAsObject;
+            });
         },
         components: {
             Person

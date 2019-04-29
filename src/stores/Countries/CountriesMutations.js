@@ -1,0 +1,1 @@
+export const LOAD_COUNTRIES = 'LOAD_COUNTRIES';
